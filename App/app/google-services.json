@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1060650085923",
+    "project_id": "aircache-4e74e",
+    "storage_bucket": "aircache-4e74e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060650085923:android:df6fa6b0553909fa324b96",
+        "android_client_info": {
+          "package_name": "com.dev334.aircache"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060650085923-p9n1hd85k5v3eihfhatpsih7p8d54b5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWQAL6ZmtGRc-qKy0rXnXieYWbAUnEZGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060650085923-p9n1hd85k5v3eihfhatpsih7p8d54b5o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
