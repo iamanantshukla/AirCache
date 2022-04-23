@@ -46,7 +46,7 @@ public class SplashScreen extends AppCompatActivity {
                     }else{
                         //open create Profile
                         Intent i = new Intent(SplashScreen.this, LoginActivity.class);
-                        i.putExtra("LoginCode", 2);
+                        i.putExtra("LoginCode", 1);
                         startActivity(i);
                     }
                 }
