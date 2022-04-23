@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.dev334.aircache.home.MainActivity;
 import com.dev334.aircache.R;
 import com.dev334.aircache.database.TinyDB;
 
@@ -75,9 +77,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openCreateProfile(){
-        FRAGMENT=2;
+        FRAGMENT=1;
         replaceFragment(createProfileFragment);
     }
+
+    public void openSignUp(){
+        FRAGMENT = 4;
+        replaceFragment(signupFragment);
+    }
+
+    public void openHomePage(){
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(i);
+    }
+
+    public void openSignIn(){
+        FRAGMENT = 2;
+        replaceFragment(loginFragment);
+    }
+
 
 
     private void replaceFragment(Fragment fragmentToShow) {

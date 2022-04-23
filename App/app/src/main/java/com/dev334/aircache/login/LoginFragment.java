@@ -1,11 +1,11 @@
 package com.dev334.aircache.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dev334.aircache.MainActivity;
 import com.dev334.aircache.R;
 import com.dev334.aircache.database.TinyDB;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,6 +41,7 @@ public class LoginFragment extends Fragment {
     private String Email,Password;
     private ProgressBar loading;
     private FirebaseFirestore firestore;
+    private String TAG = "LoginFragmentLog";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,7 @@ public class LoginFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_login, container, false);
         tinyDB=new TinyDB(getContext());
         mAuth=FirebaseAuth.getInstance();
-        newUser=view.findViewById(R.id.LoginTextSignIn);
+        newUser=view.findViewById(R.id.openSignUp);
         EditEmail=view.findViewById(R.id.editEmailSignin);
         EditPassword=view.findViewById(R.id.editPasswordSignin);
         Login=view.findViewById(R.id.signInButton);
@@ -79,6 +77,13 @@ public class LoginFragment extends Fragment {
                 {
                    loading.setVisibility(View.INVISIBLE);
                 }
+            }
+        });
+
+        newUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LoginActivity)getActivity()).openSignUp();
             }
         });
 
@@ -107,6 +112,7 @@ public class LoginFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
                 loading.setVisibility(View.INVISIBLE);
                 Toast.makeText(getContext(),"Login Failed",Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onFailure: "+e.getMessage());
             }
         });
     }
@@ -114,19 +120,21 @@ public class LoginFragment extends Fragment {
     private void checkProfileCreated() {
         String UserUID=mAuth.getCurrentUser().getUid();
         firestore.collection("Users").document(UserUID).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        loading.setVisibility(View.INVISIBLE);
-                        if(task.isSuccessful()){
-                            Intent i = new Intent(getActivity(), MainActivity.class);
-                            startActivity(i);
-                            getActivity().finish();
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists()){
+                            ((LoginActivity)getActivity()).openHomePage();
                         }else{
                             ((LoginActivity)getActivity()).openCreateProfile();
                         }
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i(TAG, "onFailure: "+e.getMessage());
+            }
+        });
 
 
     }

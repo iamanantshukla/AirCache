@@ -29,17 +29,36 @@
             android:textColor="@color/black"
             android:textSize="36sp" />
 
-        <TextView
-            android:id="@+id/LoginTextSignIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:fontFamily="@font/avenirltstd_light"
-            android:text="Don't have an account? Click Here"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/LoginTextSignup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="32dp"
+                android:fontFamily="@font/avenirltstd_light"
+                android:gravity="center"
+                android:text="Don't have an account?"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/openSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/avenirltstd_medium"
+                android:gravity="center_vertical"
+                android:text="Click Here"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
 
 
         <EditText

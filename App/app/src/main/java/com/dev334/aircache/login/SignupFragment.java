@@ -27,7 +27,7 @@ public class SignupFragment extends Fragment {
        private View view;
        private Button SignUp;
        private EditText EditEmail, EditPassword,EditName;
-       private TextView Login;
+       private TextView Login, openSignIn;
        private String Email,Password,Name;
        private ProgressBar loading;
        private ConstraintLayout parentLayout;
@@ -56,6 +56,7 @@ public class SignupFragment extends Fragment {
         loading=view.findViewById(R.id.SignUpLoading);
         Login=view.findViewById(R.id.LoginTextSignup);
         EditName=view.findViewById(R.id.editUserName);
+        openSignIn = view.findViewById(R.id.openSignIn);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -79,6 +80,13 @@ public class SignupFragment extends Fragment {
                       registerUser();
 
                   }
+              }
+          });
+
+          openSignIn.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  ((LoginActivity)getActivity()).openSignIn();
               }
           });
 
