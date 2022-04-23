@@ -8,17 +8,22 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -40,6 +45,7 @@ public class AddItem extends AppCompatActivity {
     private int REQ_IMG=21;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
+    private String TAG = "AddItemLog";
 
 
     private String image;
@@ -144,7 +150,6 @@ public class AddItem extends AppCompatActivity {
                     String ownerName="Random";
                     String rentPrice=RentPrice.getText().toString();
                     String securityMoney=SecurityMoney.getText().toString();
-                    String LockerNum="1";
 
                  Map<String,Object> item=new HashMap<>();
                  item.put("name",name);
@@ -152,23 +157,54 @@ public class AddItem extends AppCompatActivity {
                  item.put("image",image);
                  item.put("ownerName",ownerName);
                  item.put("OwnerID",UserUID);
-                 item.put("LockerID",LockerNum);
                  item.put("rentPrice",rentPrice);
                  item.put("securityMoney",securityMoney);
 
-             //    firestore.collection("Items").document().set(item)
-
-
+                findFreeLocker(item);
 
              }
          });
 
 
 
-
-
-
-
-
     }
+
+    private void findFreeLocker(Map<String, Object> item) {
+        firestore.collection("Lockers").whereEqualTo("Status", true).limit(1).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if(queryDocumentSnapshots.isEmpty()){
+                            //no free
+                        }else {
+                            DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
+                            String locker = doc.get("Code").toString();
+                            item.put("LockerID",locker);
+                            AddItemToInventory(item);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i(TAG, "onFailure: "+e.getMessage());
+            }
+        });
+    }
+
+    private void AddItemToInventory(Map<String, Object> item) {
+        firestore.collection("Items").document().set(item)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "Item Added", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i(TAG, "onFailure: "+e.getMessage());
+            }
+        });
+    }
+
 }

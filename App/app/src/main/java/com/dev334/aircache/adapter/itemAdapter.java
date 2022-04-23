@@ -17,16 +17,18 @@ import java.util.List;
 public class itemAdapter extends RecyclerView.Adapter<itemAdapter.mViewHolder> {
 
     private List<Item> itemModels;
+    private onNoteListener mOnNoteListener;
 
-    public itemAdapter(List<Item> itemModels){
+    public itemAdapter(List<Item> itemModels, onNoteListener onNoteListener){
         this.itemModels=itemModels;
+        this.mOnNoteListener=onNoteListener;
     }
 
     @NonNull
     @Override
     public mViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
-        return new itemAdapter.mViewHolder(view);
+        return new itemAdapter.mViewHolder(view, mOnNoteListener);
     }
 
     @Override
@@ -42,16 +44,23 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.mViewHolder> {
         return itemModels.size();
     }
 
-    public class mViewHolder extends RecyclerView.ViewHolder{
+    public interface onNoteListener{
+        void onNoteClick(int position);
+    }
+
+    public class mViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         View view;
         TextView itemName,itemPrice,itemLockNumer;
         Button itemViewDetails;
+        onNoteListener onNotelistener;
 
 
 
-        public mViewHolder(@NonNull View itemView) {
+        public mViewHolder(@NonNull View itemView, onNoteListener monNoteListener) {
             super(itemView);
             view = itemView;
+            view.setOnClickListener(this);
+            onNotelistener = monNoteListener;
         }
 
         public void setItemName(String name) {
@@ -59,14 +68,19 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.mViewHolder> {
             itemName.setText(name);
         }
 
-        public void setItemPrice(Double rentPrice) {
+        public void setItemPrice(String rentPrice) {
             itemPrice = view.findViewById(R.id.textView_item_price);
-            itemPrice.setText(rentPrice.toString());
+            itemPrice.setText("₹ " + rentPrice);
         }
 
         public void setLockNo(String lockerID) {
             itemLockNumer = view.findViewById(R.id.textView_item_lockno);
             itemLockNumer.setText(lockerID);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onNotelistener.onNoteClick(getAdapterPosition());
         }
     }
 }

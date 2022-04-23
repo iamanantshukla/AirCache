@@ -7,9 +7,9 @@ public class Item {
     private String image;
     private String ownerName;
     private String OwnerID;
-    private String lockerID;
-    private Double rentPrice;
-    private Double securityMoney;
+    private String LockerID;
+    private String rentPrice;
+    private String securityMoney;
 
     Item(){
         //empty Constructor
@@ -64,26 +64,26 @@ public class Item {
     }
 
     public String getLockerID() {
-        return lockerID;
+        return LockerID;
     }
 
     public void setLockerID(String lockerID) {
-        this.lockerID = lockerID;
+        this.LockerID = lockerID;
     }
 
-    public Double getRentPrice() {
+    public String getRentPrice() {
         return rentPrice;
     }
 
-    public void setRentPrice(Double rentPrice) {
+    public void setRentPrice(String rentPrice) {
         this.rentPrice = rentPrice;
     }
 
-    public Double getSecurityMoney() {
+    public String getSecurityMoney() {
         return securityMoney;
     }
 
-    public void setSecurityMoney(Double securityMoney) {
+    public void setSecurityMoney(String securityMoney) {
         this.securityMoney = securityMoney;
     }
 }

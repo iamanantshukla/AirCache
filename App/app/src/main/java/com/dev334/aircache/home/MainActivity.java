@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.dev334.aircache.AddItem;
 import com.dev334.aircache.R;
 import com.dev334.aircache.scan.ScanActivity;
 import com.github.clans.fab.FloatingActionButton;
@@ -66,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ScanActivity.class);
+                startActivity(i);
+            }
+        });
+
+        addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(MainActivity.this, AddItem.class);
                 startActivity(i);
             }
         });

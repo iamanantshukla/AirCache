@@ -30,6 +30,8 @@
         <activity android:name=".home.MainActivity">
 
         </activity>
+        <activity android:name=".AddItem"/>
+        <activity android:name=".home.ItemListActivity"/>
     </application>
 
 </manifest>
