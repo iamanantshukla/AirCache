@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+=======
         <entry key="..\:/web/AirCache/App/app/src/main/res/layout/activity_main.xml" value="0.2234375" />
+>>>>>>> 8a6e1f2e96e8b996f90d9e46031a418898aea076
       </map>
     </option>
   </component>

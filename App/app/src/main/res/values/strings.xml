@@ -2,4 +2,15 @@
     <string name="app_name">AirCache</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="array_categories">
+        <item>Select Your Item Category</item>
+        <item>Stationery </item>
+        <item>Sports</item>
+        <item>Electronics</item>
+        <item>miscellaneous</item>
+       </string-array>
+
+
 </resources>
