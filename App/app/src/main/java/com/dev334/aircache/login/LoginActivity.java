@@ -14,13 +14,15 @@ public class LoginActivity extends AppCompatActivity {
 
        private LoginFragment loginFragment;
        private SignupFragment signupFragment;
+       private CreateProfileFragment createProfileFragment;
+       private LoginHomeFragment loginHomeFragment;
        private FragmentManager fragmentManager;
        private VerificationFragment verificationFragment;
        private int FRAGMENT=0;
-        private String UserId;
-        private TinyDB tinyDB;
-        private final String TAG="LoginActivityLog";
-    private String email,password;
+       private String UserId;
+       private TinyDB tinyDB;
+       private final String TAG="LoginActivityLog";
+       private String email,password;
 
 
     @Override
@@ -30,12 +32,17 @@ public class LoginActivity extends AppCompatActivity {
 
         loginFragment=new LoginFragment();
         signupFragment=new SignupFragment();
+        createProfileFragment = new CreateProfileFragment();
+        loginHomeFragment = new LoginHomeFragment();
+
         verificationFragment=new VerificationFragment();
         fragmentManager=getSupportFragmentManager();
         if(FRAGMENT==0){
+            replaceFragment(loginHomeFragment);
+        }else if(FRAGMENT==2){
             replaceFragment(loginFragment);
         }else if(FRAGMENT==1){
-            replaceFragment(CreateProfileFragment);
+            replaceFragment(createProfileFragment);
         }else{
             replaceFragment(signupFragment);
         }
@@ -65,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openCreateProfile(){
-          replaceFragment(CreateProfileFragment);
+          replaceFragment(createProfileFragment);
     }
 
 

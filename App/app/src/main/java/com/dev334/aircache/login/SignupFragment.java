@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev334.aircache.R;
@@ -25,12 +26,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SignupFragment extends Fragment {
        private View view;
        private Button SignUp;
-       private EditText EditEmail, EditPassword, Login,EditName;
+       private EditText EditEmail, EditPassword,EditName;
+       private TextView Login;
        private String Email,Password,Name;
        private ProgressBar loading;
        private ConstraintLayout parentLayout;
        private FirebaseAuth mAuth;
        private FirebaseFirestore firestore;
+       private String TAG = "SignUpFragmentError";
 
 
     public SignupFragment() {
@@ -53,6 +56,8 @@ public class SignupFragment extends Fragment {
         loading=view.findViewById(R.id.SignUpLoading);
         Login=view.findViewById(R.id.LoginTextSignup);
         EditName=view.findViewById(R.id.editUserName);
+
+        mAuth = FirebaseAuth.getInstance();
 
 //        Login.setOnClickListener(v->{
 //            ((LoginActivity)getActivity()).openLogin();
@@ -93,6 +98,7 @@ public class SignupFragment extends Fragment {
               @Override
                public void onFailure(@NonNull Exception e) {
                   Toast.makeText(getContext(),"Signup Failed",Toast.LENGTH_SHORT).show();
+                  Log.i(TAG, "onFailure: "+e.getMessage());
               }
           });
 

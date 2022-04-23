@@ -1,4 +1,4 @@
-package com.dev334.aircache;
+package com.dev334.aircache.login;
 
 import android.os.Bundle;
 
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.dev334.aircache.R;
 
 import org.w3c.dom.Text;
 
@@ -26,8 +28,7 @@ public class CreateProfileFragment extends Fragment {
     }
 
     private View view;
-    private TextView profileName, profileMobile, profileID;
-    private Button nextBtn;
+    private TextView profileName, profileMobile, profileID, nextBtn;
     private String name, mobile, collegeID;
 
     @Override
