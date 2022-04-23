@@ -37,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
 
         verificationFragment=new VerificationFragment();
         fragmentManager=getSupportFragmentManager();
+
+        FRAGMENT = getIntent().getIntExtra("LoginCode", 0);
+
         if(FRAGMENT==0){
             replaceFragment(loginHomeFragment);
         }else if(FRAGMENT==2){
@@ -72,7 +75,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openCreateProfile(){
-          replaceFragment(createProfileFragment);
+        FRAGMENT=2;
+        replaceFragment(createProfileFragment);
     }
 
 
