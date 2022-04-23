@@ -37,6 +37,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:id="@+id/change_password"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -70,6 +71,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:id="@+id/my_wallet"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -103,6 +105,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:id="@+id/log_out"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -136,6 +139,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:id="@+id/delete_account"
                 android:orientation="vertical">
 
                 <LinearLayout
