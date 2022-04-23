@@ -35,7 +35,8 @@ public class SplashScreen extends AppCompatActivity {
             i.putExtra("LoginCode", 0);
             startActivity(i);
         }else{
-            firestore.collection("Users").document().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            String userId = mAuth.getCurrentUser().getUid();
+            firestore.collection("Users").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     if(documentSnapshot.exists()){
