@@ -47,6 +47,8 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.mViewHolder> {
         TextView itemName,itemPrice,itemLockNumer;
         Button itemViewDetails;
 
+
+
         public mViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
