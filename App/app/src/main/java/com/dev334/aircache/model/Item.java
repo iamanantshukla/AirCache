@@ -10,6 +10,24 @@ public class Item {
     private String LockerID;
     private String rentPrice;
     private String securityMoney;
+    private String curUserID;
+    private Boolean status;
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getCurUserID() {
+        return curUserID;
+    }
+
+    public void setCurUserID(String curUserID) {
+        this.curUserID = curUserID;
+    }
 
     Item(){
         //empty Constructor

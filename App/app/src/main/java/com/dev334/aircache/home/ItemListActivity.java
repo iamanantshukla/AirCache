@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.dev334.aircache.R;
 import com.dev334.aircache.adapter.itemAdapter;
@@ -28,6 +29,7 @@ public class ItemListActivity extends AppCompatActivity implements itemAdapter.o
     private String itemType;
     private FirebaseFirestore firestore;
     private String TAG = "ItemListActivityLog";
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class ItemListActivity extends AppCompatActivity implements itemAdapter.o
         setContentView(R.layout.activity_item_list);
 
         itemType = getIntent().getStringExtra("Category");
+
+        textView = findViewById(R.id.textView21);
+        textView.setText(itemType);
 
         itemRecyclerView = findViewById(R.id.itemlist_recyclerview);
 

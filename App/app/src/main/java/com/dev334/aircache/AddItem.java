@@ -159,6 +159,7 @@ public class AddItem extends AppCompatActivity {
                  item.put("OwnerID",UserUID);
                  item.put("rentPrice",rentPrice);
                  item.put("securityMoney",securityMoney);
+                 item.put("curUserID", "");
 
                 findFreeLocker(item);
 
