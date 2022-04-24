@@ -28,6 +28,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.razorpay.Checkout;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.util.HashMap;
@@ -40,85 +44,34 @@ public class AddItem extends AppCompatActivity {
     private TextView ItemImage;
     private Spinner categorySpinner;
     private ArrayAdapter<CharSequence> categoryAdapter;
-    StorageReference storageReference;
+    private StorageReference storageReference;
     private Button submit;
-    private int REQ_IMG=21;
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
     private String TAG = "AddItemLog";
-
-
-    private String image;
+    private String UriImage;
     private String UserUID;
-
-    private boolean pdfUploadFlag=false;
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode==REQ_IMG && resultCode==RESULT_OK && data!=null)
-        {
-            uploadToStorage(data.getData(),data);
-        }
-
-
-    }
-
-    private void uploadToStorage(Uri data, Intent data1) {
-
-        final ProgressDialog progressDialog=new ProgressDialog(getApplicationContext());
-        progressDialog.setTitle("Loading...");
-        progressDialog.show();
-
-        StorageReference reference=storageReference.child("ItemImage"+System.currentTimeMillis()+".pdf");
-
-        reference.putFile(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-
-                Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete());
-                Uri uri=uriTask.getResult();
-
-
-                File file= new File(uri.getPath());
-                image=uri.toString();
-
-                ItemImage.setText(file.getName().toString());
-                pdfUploadFlag=true;
-                progressDialog.dismiss();
-
-
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-
-                double progress=(100.0*snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                progressDialog.setMessage("File Uploading ..."+(int)progress);
-
-            }
-        });
+    private String CurrentTime="";
 
 
 
-    }
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        storageReference= FirebaseStorage.getInstance().getReference();
+         storageReference= FirebaseStorage.getInstance().getReference();
 
          ItemName=findViewById(R.id.addItemName);
          SecurityMoney=findViewById(R.id.addItemSecurityMoney);
          RentPrice=findViewById(R.id.addItemRentPrice);
          ItemImage=findViewById(R.id.addItemImage);
-
          categorySpinner=findViewById(R.id.addItemCategory);
          categoryAdapter=ArrayAdapter.createFromResource(getApplicationContext(),R.array.array_categories,R.layout.spinner_layout);
          categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -132,11 +85,7 @@ public class AddItem extends AppCompatActivity {
          ItemImage.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                   Intent chooseFile=new Intent(Intent.ACTION_GET_CONTENT);
-                   chooseFile.setType("image/jpg");
-                   chooseFile=Intent.createChooser(chooseFile,"Choose the item image");
-                   startActivityForResult(chooseFile,REQ_IMG);
-
+                   CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1).start(AddItem.this);
              }
          });
 
@@ -146,7 +95,6 @@ public class AddItem extends AppCompatActivity {
              public void onClick(View view) {
                     String name=ItemName.getText().toString();
                     String category=categorySpinner.getSelectedItem().toString();
-                    //image
                     String ownerName="Random";
                     String rentPrice=RentPrice.getText().toString();
                     String securityMoney=SecurityMoney.getText().toString();
@@ -154,11 +102,12 @@ public class AddItem extends AppCompatActivity {
                  Map<String,Object> item=new HashMap<>();
                  item.put("name",name);
                  item.put("category",category);
-                 item.put("image",image);
+                 item.put("image",UserUID+CurrentTime);
                  item.put("ownerName",ownerName);
                  item.put("OwnerID",UserUID);
                  item.put("rentPrice",rentPrice);
                  item.put("securityMoney",securityMoney);
+
 
                 findFreeLocker(item);
 
@@ -167,6 +116,20 @@ public class AddItem extends AppCompatActivity {
 
 
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            Uri resultUri = result.getUri();
+            ItemImage.setText("Uploaded");
+            uploadImageToFirebase(resultUri);
+
+        }
     }
 
     private void findFreeLocker(Map<String, Object> item) {
@@ -207,4 +170,30 @@ public class AddItem extends AppCompatActivity {
         });
     }
 
-}
+
+
+    private void uploadImageToFirebase(Uri ImageUri) {
+
+         CurrentTime=String.valueOf(System.currentTimeMillis());
+        final StorageReference fileRef=storageReference.child("items/"+mAuth.getCurrentUser().getUid()+CurrentTime);
+        fileRef.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Toast.makeText(AddItem.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                        UriImage=uri.toString();
+                        Log.i(TAG, "onSuccess: "+UriImage);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddItem.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    }

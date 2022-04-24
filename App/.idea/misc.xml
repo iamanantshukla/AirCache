@@ -3,20 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/web/AirCache/App/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.1" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2111111111111111" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/drawable/rounded_black_outbox.xml" value="0.2111111111111111" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/drawable/rounded_blackbox.xml" value="0.2111111111111111" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/drawable/rounded_blackbtn.xml" value="0.2111111111111111" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/drawable/rounded_greybtn.xml" value="0.2111111111111111" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/drawable/rounded_whitebtn.xml" value="0.2111111111111111" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/layout/activity_item_list.xml" value="0.2234375" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/layout/activity_login.xml" value="0.17300724637681159" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/layout/activity_payment.xml" value="0.2234375" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/layout/category_card.xml" value="0.192481884057971" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
-        <entry key="..\:/web/AirCache/App/app/src/main/res/layout/item_card.xml" value="0.264" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_add_item.xml" value="0.25" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_item_list.xml" value="0.1431159420289855" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_item_view.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_main.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_payment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/activity_splash_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/category_card.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/dialog_view_item.xml" value="0.25" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/fragment_create_profile.xml" value="0.4" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/fragment_login.xml" value="0.264" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/fragment_login_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/fragment_signup.xml" value="0.1" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/fragment_verification.xml" value="0.18704710144927536" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/item_card.xml" value="0.1431159420289855" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/spinner_dropdown_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/Documents/Hack36/AirCache/App/app/src/main/res/layout/spinner_layout.xml" value="0.11574074074074074" />
       </map>
     </option>
   </component>
