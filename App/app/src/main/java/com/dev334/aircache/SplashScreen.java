@@ -29,7 +29,7 @@ public class SplashScreen extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        if(mAuth.getCurrentUser().getUid().isEmpty()){
+        if(mAuth.getCurrentUser()==null){
             //open signUp
             Intent i = new Intent(SplashScreen.this, LoginActivity.class);
             i.putExtra("LoginCode", 0);

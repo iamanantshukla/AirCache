@@ -15,7 +15,12 @@
         android:theme="@style/Theme.AirCache">
         <activity android:name=".ItemActivity"></activity>
         <activity android:name=".scan.ScanActivity"></activity>
-        <activity android:name=".SplashScreen"></activity>
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -23,11 +28,6 @@
             android:name=".login.LoginActivity"
             android:exported="true" />
         <activity android:name=".home.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".AddItem" />
         <activity android:name=".home.ItemListActivity" />

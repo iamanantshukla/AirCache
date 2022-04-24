@@ -78,6 +78,8 @@ public class CreateProfileFragment extends Fragment {
                     user.put("Name",name);
                     user.put("mobile",mobile);
                     user.put("collegeId",collegeID);
+                    user.put("Item", "null");
+                    user.put("Status", false);
 
                     firestore.collection("Users").document(UserUID).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
