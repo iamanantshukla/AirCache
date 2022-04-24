@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -74,6 +76,14 @@ public class ItemListActivity extends AppCompatActivity implements itemAdapter.o
 
     @Override
     public void onNoteClick(int position) {
-        //open item details
+
+        AlertDialog.Builder alert=new AlertDialog.Builder(getApplicationContext());
+        View view=getLayoutInflater().inflate(R.layout.dialog_view_item,null);
+        alert.setView(view);
+        AlertDialog show=alert.show();
+        alert.setCancelable(true);
+        show.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
     }
 }
