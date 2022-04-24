@@ -10,7 +10,7 @@ Community Locker and sharing application
    
    
 ## Presentation Link:
-
+   (https://docs.google.com/presentation/d/10cB8mFsVPbD18TTZhLvj2-bfwsDPaOc7N7fHMzAECCU/edit?usp=sharing)
 
 ## Technology Stack:
     1)Android
