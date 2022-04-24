@@ -54,7 +54,7 @@
             android:background="@drawable/rounded_whitebtn"
             android:fontFamily="@font/avenirltstd_heavy"
             android:padding="16dp"
-            android:text="Return"
+            android:text="return"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp" />

@@ -51,7 +51,8 @@ public class ScanActivity extends AppCompatActivity {
     private String DocumentId= "";
     private DocumentSnapshot doc;
     private String UserId;
-    private TextView scanTextHead;
+    private TextView scanTextHead, mItemName;
+    private Boolean BORROW = false;
 
 
 
@@ -63,10 +64,14 @@ public class ScanActivity extends AppCompatActivity {
         ScanQrBtn = findViewById(R.id.scanQrBtn);
         otpTextView = findViewById(R.id.otp_view);
         nextBtn = findViewById(R.id.nextBtn);
+        mItemName = findViewById(R.id.textView2);
 
         scanTextHead = findViewById(R.id.scanItemHead);
 
         USER_STATUS = getIntent().getIntExtra("Type", 0);
+        mItemName.setText(getIntent().getStringExtra("ItemName"));
+        firestore = FirebaseFirestore.getInstance();
+        getUserInfo();
 
         if(USER_STATUS==1){
             scanTextHead.setText("Return Item");
@@ -77,7 +82,6 @@ public class ScanActivity extends AppCompatActivity {
         webView = findViewById(R.id.web_view_scan);
         UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        firestore = FirebaseFirestore.getInstance();
 
         ScanQrBtn.setOnClickListener(v->{
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -115,6 +119,34 @@ public class ScanActivity extends AppCompatActivity {
 
     }
 
+    private void getUserInfo() {
+        firestore.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    if(documentSnapshot.get("Item").toString().equals("null")){
+                        BORROW=true;
+                        Log.i(TAG, "onSuccess: Can borrow");
+                        return;
+                    }
+                    firestore.collection("Items").document(documentSnapshot.get("Item").toString())
+                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            mItemName.setText(documentSnapshot.get("name").toString());
+                        }
+                    });
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
     private void getItemDetail() {
         firestore.collection("Items").whereEqualTo("LockerID", CODE).limit(1).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -127,6 +159,11 @@ public class ScanActivity extends AppCompatActivity {
                             String itemName = doc.get("name").toString();
                             DocumentId = doc.getId();
                             //Toast.makeText(getApplicationContext(), "Hello"+ itemName, Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "onSuccess: "+doc.get("name"));
+                            if(!doc.get("name").toString().equals(mItemName.getText().toString()) && !mItemName.getText().toString().isEmpty()){
+                                Toast.makeText(getApplicationContext(), "Wrong Locker", Toast.LENGTH_LONG).show();
+                                return;
+                            }
 
                             showItemDialog(itemName);
 
@@ -219,6 +256,10 @@ public class ScanActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vi) {
+                if(!BORROW && USER_STATUS==0){
+                    Toast.makeText(getApplicationContext(), "Return the previous item first", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 //confirm item
                 firestore.collection("Lockers").whereEqualTo("Code", CODE).get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -261,7 +302,7 @@ public class ScanActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            firestore.collection("Users").document(UserId).update("Status", true)
+                            firestore.collection("Users").document(UserId).update("Status", true, "Item", DocumentId)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -287,7 +328,7 @@ public class ScanActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            firestore.collection("Users").document(UserId).update("Status", false)
+                            firestore.collection("Users").document(UserId).update("Status", false, "Item", "null")
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -303,7 +344,7 @@ public class ScanActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
+                    Log.i(TAG+"m", "onFailure: "+e.getMessage());
                 }
             });
         }

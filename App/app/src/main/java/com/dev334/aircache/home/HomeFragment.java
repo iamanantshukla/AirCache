@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
                 borrowed = documentSnapshot.getBoolean("Status");
                 if(borrowed) {
                     headerText.setText("You have already borrowed an item.");
-                    headerBtn1.setText("replace");
+                    headerBtn1.setText("return");
                     headerBtn2.setText("view details");
                 }else{
                     headerText.setText("Borrow an item now.");
