@@ -7,6 +7,7 @@ Community Locker and sharing application
    An application for sharing general purpose commodities along with a automated lock system.
    
 ## Demo Video Link:
+   (https://youtu.be/bHpXHFJRYn0)
    
    
 ## Presentation Link:
